@@ -28,6 +28,7 @@ dwm: ${OBJ}
 clean:
 	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz config.h .patches
 	rm -f	dwm.c.orig config.def.h.orig dwm.c.rej
+	rm -rf dwm_$(VERSION)_amd64.deb build/usr
 	git co dwm.c dwm.1 config.def.h
 
 dist: clean
@@ -55,5 +56,13 @@ uninstall:
 	patch -p1 < patches/02-dwm-fullscreen-6.3.diff
 	patch -p1 < patches/03-dwm-config-6.3.diff
 	touch .patches
+
+dwm_$(VERSION)_amd64.deb:
+	mkdir -p build/usr/local/bin
+	cp dwm build/usr/local/bin
+	sed -i '/^Version: /s,.*,Version: $(VERSION),' build/DEBIAN/control
+	dpkg-deb -b --root-owner-group build dwm_$(VERSION)_amd64.deb
+
+deb: all dwm_$(VERSION)_amd64.deb
 
 .PHONY: all options clean dist install uninstall
