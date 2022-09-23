@@ -56,4 +56,12 @@ uninstall:
 	patch -p1 < patches/03-dwm-config-6.3.diff
 	touch .patches
 
+dwm_$(VERSION)_amd64.deb:
+	mkdir -p build/usr/local/bin
+	cp dwm build/usr/local/bin
+	sed -i '/^Version: /s,.*,Version: $(VERSION),' build/DEBIAN/control
+	dpkg-deb -b --root-owner-group build dwm_$(VERSION)_amd64.deb
+
+deb: all dwm_$(VERSION)_amd64.deb
+
 .PHONY: all options clean dist install uninstall
