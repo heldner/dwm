@@ -19,14 +19,16 @@ options:
 
 ${OBJ}: config.h config.mk
 
-config.h:
+config.h: .patches
 	cp config.def.h $@
 
 dwm: ${OBJ}
 	${CC} -o $@ ${OBJ} ${LDFLAGS}
 
 clean:
-	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
+	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz config.h .patches
+	rm -f	dwm.c.orig config.def.h.orig dwm.c.rej
+	git co dwm.c dwm.1 config.def.h
 
 dist: clean
 	mkdir -p dwm-${VERSION}
@@ -47,5 +49,11 @@ install: all
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
+
+.patches:
+	patch -p1 < patches/01-dwm-blanktags-6.3.diff
+	patch -p1 < patches/02-dwm-fullscreen-6.3.diff
+	patch -p1 < patches/03-dwm-config-6.3.diff
+	touch .patches
 
 .PHONY: all options clean dist install uninstall
