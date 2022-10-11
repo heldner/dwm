@@ -28,6 +28,7 @@ dwm: ${OBJ}
 clean:
 	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz config.h .patches
 	rm -f	dwm.c.orig config.def.h.orig dwm.c.rej
+	rm -rf build/usr dwm_$(VERSION)_amd64.deb
 	git co dwm.c dwm.1 config.def.h
 
 dist: clean
