@@ -33,10 +33,10 @@ index b0b3466..88aa701 100644
 +		drw_text(drw, x, 0, bh, bh, 0, "", urg & 1 << i);
  		if (occ & 1 << i)
 -			drw_rect(drw, x + boxs, boxs, boxw, boxw,
-+			drw_rect(drw, x+boxw,boxw, w-boxw*2, w-boxw*2,
++			drw_rect(drw, x+boxw,boxw, w-boxw*3, w-boxw*3,
  				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
  				urg & 1 << i);
  		x += w;
--- 
+--
 2.31.1
 
