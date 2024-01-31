@@ -58,8 +58,8 @@ uninstall:
 	touch .patches
 
 dwm_$(VERSION)_amd64.deb:
-	mkdir -p build/usr/local/bin
-	cp dwm build/usr/local/bin
+	mkdir -p build/usr/bin
+	cp dwm build/usr/bin
 	sed -i '/^Version: /s,.*,Version: $(VERSION),' build/DEBIAN/control
 	dpkg-deb -b --root-owner-group build dwm_$(VERSION)_amd64.deb
 

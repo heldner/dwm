@@ -5,9 +5,8 @@ Priority: optional
 Section: x11
 Maintainer: Stanislv Korolev <teeroo@yandex.ru>
 Installed-Size: 64 kB
-Recommends: dwm
 Homepage: https://suckless.org
 Tag: implemented-in::c, interface::graphical, interface::x11, role::program,
  uitoolkit::xlib, x11::window-manager
 Download-Size: 12.0 kB
-Description: Daemon update status bar for dynamic window manager
+Description: Minimalistic tiling window manager
