@@ -52,9 +52,10 @@ uninstall:
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
 .patches:
-	patch -p1 < patches/01-dwm-blanktags-6.3.diff
-	patch -p1 < patches/02-dwm-fullscreen-6.3.diff
-	patch -p1 < patches/03-dwm-config-6.3.diff
+	patch -p1 < patches/dwm-blanktags-6.3.diff
+	patch -p1 < patches/dwm-fullscreen-6.3.diff
+	patch -p1 < patches/dwm-config-6.3.diff
+	patch -p1 < patches/dwm-alwayscenter-20200625-f04cac6.diff
 	touch .patches
 
 dwm_$(VERSION)_amd64.deb:
