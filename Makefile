@@ -19,14 +19,20 @@ options:
 
 ${OBJ}: config.h config.mk
 
-config.h:
+config.h: .patches
 	cp config.def.h $@
 
+dwm_build: ${OBJ}
+	${CC} -o dwm ${OBJ} ${LDFLAGS}
+
 dwm: ${OBJ}
-	${CC} -o $@ ${OBJ} ${LDFLAGS}
+	$(MAKE) dwm_build
 
 clean:
-	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz
+	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz config.h .patches
+	rm -f	dwm.c.orig config.def.h.orig dwm.c.rej
+	rm -rf dwm_$(VERSION)_amd64.deb build/usr
+	git co dwm.c dwm.1 config.def.h
 
 dist: clean
 	mkdir -p dwm-${VERSION}
@@ -47,5 +53,21 @@ install: all
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
+
+.patches:
+	patch -p1 < patches/dwm-blanktags-6.4.diff
+	patch -p1 < patches/dwm-fullscreen-6.4.diff
+	patch -p1 < patches/dwm-alwayscenter-6.4.diff
+	patch -p1 < patches/dwm-config-6.4.diff
+	patch -p1 < patches/dwm-winicon-6.4.diff
+	touch .patches
+
+dwm_$(VERSION)_amd64.deb:
+	mkdir -p build/usr/bin
+	cp dwm build/usr/bin
+	sed -i '/^Version: /s,.*,Version: $(VERSION),' build/DEBIAN/control
+	dpkg-deb -b --root-owner-group build dwm_$(VERSION)_amd64.deb
+
+deb: all dwm_$(VERSION)_amd64.deb
 
 .PHONY: all options clean dist install uninstall

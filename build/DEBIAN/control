@@ -1,0 +1,12 @@
+Package: dwm
+Architecture: amd64
+Version: 6.3
+Priority: optional
+Section: x11
+Maintainer: Stanislv Korolev <teeroo@yandex.ru>
+Installed-Size: 64 kB
+Homepage: https://suckless.org
+Tag: implemented-in::c, interface::graphical, interface::x11, role::program,
+ uitoolkit::xlib, x11::window-manager
+Download-Size: 12.0 kB
+Description: Minimalistic tiling window manager

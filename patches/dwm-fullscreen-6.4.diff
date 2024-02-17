@@ -1,0 +1,46 @@
+diff --git a/config.def.h b/config.def.h
+index 061ad66..5c03d59 100644
+--- a/config.def.h
++++ b/config.def.h
+@@ -74,7 +74,8 @@ static const Key keys[] = {
+ 	{ MODKEY,                       XK_Tab,    view,           {0} },
+ 	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+ 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
++	{ MODKEY,                       XK_f,      fullscreen,     {0} },
++	{ MODKEY,                       XK_n,      setlayout,      {.v = &layouts[1]} },
+ 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+ 	{ MODKEY,                       XK_space,  setlayout,      {0} },
+ 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+diff --git a/dwm.c b/dwm.c
+index e5efb6a..5a3e744 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -200,6 +200,7 @@ static void sendmon(Client *c, Monitor *m);
+ static void setclientstate(Client *c, long state);
+ static void setfocus(Client *c);
+ static void setfullscreen(Client *c, int fullscreen);
++static void fullscreen(const Arg *arg);
+ static void setlayout(const Arg *arg);
+ static void setmfact(const Arg *arg);
+ static void setup(void);
+@@ -1498,6 +1499,19 @@ setfullscreen(Client *c, int fullscreen)
+ 	}
+ }
+
++Layout *last_layout;
++void
++fullscreen(const Arg *arg)
++{
++	if (selmon->showbar) {
++		for(last_layout = (Layout *)layouts; last_layout != selmon->lt[selmon->sellt]; last_layout++);
++		setlayout(&((Arg) { .v = &layouts[2] }));
++	} else {
++		setlayout(&((Arg) { .v = last_layout }));
++	}
++	togglebar(arg);
++}
++
+ void
+ setlayout(const Arg *arg)
+ {
