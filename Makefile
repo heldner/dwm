@@ -19,7 +19,7 @@ options:
 
 ${OBJ}: config.h config.mk
 
-config.h: .patches
+config.h: .pc
 	cp config.def.h $@
 
 dwm_build: ${OBJ}
@@ -29,9 +29,9 @@ dwm: ${OBJ}
 	$(MAKE) dwm_build
 
 clean:
-	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz config.h .patches
+	rm -f dwm ${OBJ} dwm-${VERSION}.tar.gz config.h
 	rm -f	dwm.c.orig config.def.h.orig dwm.c.rej
-	rm -rf dwm_$(VERSION)_amd64.deb build/usr
+	rm -rf dwm_$(VERSION)_amd64.deb build/usr .pc
 	git co dwm.c dwm.1 config.def.h
 
 dist: clean
@@ -54,13 +54,9 @@ uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
-.patches:
-	patch -p1 < patches/dwm-blanktags-6.4.diff
-	patch -p1 < patches/dwm-fullscreen-6.4.diff
-	patch -p1 < patches/dwm-alwayscenter-6.4.diff
-	patch -p1 < patches/dwm-config-6.4.diff
-	patch -p1 < patches/dwm-winicon-6.4.diff
-	touch .patches
+.pc:
+	quilt init
+	quilt push -a
 
 dwm_$(VERSION)_amd64.deb:
 	mkdir -p build/usr/bin

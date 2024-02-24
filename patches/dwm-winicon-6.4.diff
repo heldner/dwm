@@ -1,5 +1,5 @@
 diff --git a/config.def.h b/config.def.h
-index 794c095..5172c4c 100644
+index 592d5b8..57be91f 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -5,6 +5,8 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -172,7 +172,7 @@ index 6471431..e42eead 100644
  /* Map functions */
  void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
 diff --git a/dwm.c b/dwm.c
-index 55c7047..6042d42 100644
+index d216f71..62de7f3 100644
 --- a/dwm.c
 +++ b/dwm.c
 @@ -28,6 +28,8 @@
@@ -209,8 +209,8 @@ index 55c7047..6042d42 100644
  static int getrootptr(int *x, int *y);
  static long getstate(Window w);
  static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
-@@ -215,6 +219,7 @@ static void togglebar(const Arg *arg);
- static void togglefloating(const Arg *arg);
+@@ -215,6 +219,7 @@ static void togglefloating(const Arg *arg);
+ static void togglefullscr(const Arg *arg);
  static void toggletag(const Arg *arg);
  static void toggleview(const Arg *arg);
 +static void freeicon(Client *c);
@@ -323,7 +323,7 @@ index 55c7047..6042d42 100644
  		if (ev->atom == netatom[NetWMWindowType])
  			updatewindowtype(c);
  	}
-@@ -1573,6 +1647,7 @@ setup(void)
+@@ -1560,6 +1634,7 @@ setup(void)
  	netatom[NetActiveWindow] = XInternAtom(dpy, "_NET_ACTIVE_WINDOW", False);
  	netatom[NetSupported] = XInternAtom(dpy, "_NET_SUPPORTED", False);
  	netatom[NetWMName] = XInternAtom(dpy, "_NET_WM_NAME", False);
@@ -331,7 +331,7 @@ index 55c7047..6042d42 100644
  	netatom[NetWMState] = XInternAtom(dpy, "_NET_WM_STATE", False);
  	netatom[NetWMCheck] = XInternAtom(dpy, "_NET_SUPPORTING_WM_CHECK", False);
  	netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
-@@ -1760,6 +1835,15 @@ toggleview(const Arg *arg)
+@@ -1754,6 +1829,15 @@ toggleview(const Arg *arg)
  	}
  }
  
@@ -347,7 +347,7 @@ index 55c7047..6042d42 100644
  void
  unfocus(Client *c, int setfocus)
  {
-@@ -1781,6 +1865,7 @@ unmanage(Client *c, int destroyed)
+@@ -1775,6 +1859,7 @@ unmanage(Client *c, int destroyed)
  
  	detach(c);
  	detachstack(c);
@@ -355,7 +355,7 @@ index 55c7047..6042d42 100644
  	if (!destroyed) {
  		wc.border_width = c->oldbw;
  		XGrabServer(dpy); /* avoid race conditions */
-@@ -2017,6 +2102,13 @@ updatetitle(Client *c)
+@@ -2011,6 +2096,13 @@ updatetitle(Client *c)
  		strcpy(c->name, broken);
  }
  
