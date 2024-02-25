@@ -59,8 +59,9 @@ uninstall:
 	quilt push -a
 
 dwm_$(VERSION)_amd64.deb:
-	mkdir -p build/usr/bin
+	mkdir -p build/usr/bin build/usr/share/man/man1
 	cp dwm build/usr/bin
+	cp dwm.1 build/usr/share/man/man1
 	sed -i '/^Version: /s,.*,Version: $(VERSION),' build/DEBIAN/control
 	dpkg-deb -b --root-owner-group build dwm_$(VERSION)_amd64.deb
 
