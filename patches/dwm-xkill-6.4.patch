@@ -1,0 +1,21 @@
+diff --git a/dwm.c b/dwm.c
+index 1e287a4..633e436 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -1089,15 +1089,7 @@ killclient(const Arg *arg)
+ {
+ 	if (!selmon->sel)
+ 		return;
+-	if (!sendevent(selmon->sel, wmatom[WMDelete])) {
+-		XGrabServer(dpy);
+-		XSetErrorHandler(xerrordummy);
+-		XSetCloseDownMode(dpy, DestroyAll);
+-		XKillClient(dpy, selmon->sel->win);
+-		XSync(dpy, False);
+-		XSetErrorHandler(xerror);
+-		XUngrabServer(dpy);
+-	}
++	XKillClient(dpy, selmon->sel->win);
+ }
+
+ void
