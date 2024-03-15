@@ -1,8 +1,8 @@
 diff --git a/dwm.c b/dwm.c
-index 1e287a4..633e436 100644
+index 6030995..87bfdfe 100644
 --- a/dwm.c
 +++ b/dwm.c
-@@ -1089,15 +1089,7 @@ killclient(const Arg *arg)
+@@ -1091,15 +1091,7 @@ killclient(const Arg *arg)
  {
  	if (!selmon->sel)
  		return;
@@ -17,5 +17,5 @@ index 1e287a4..633e436 100644
 -	}
 +	XKillClient(dpy, selmon->sel->win);
  }
-
+ 
  void
